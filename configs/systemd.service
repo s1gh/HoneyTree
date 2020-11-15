@@ -1,0 +1,15 @@
+[Unit]
+Description=HoneyTree - Gunicorn daemon for honeytree.py
+After=network.target
+
+[Service]
+User=root
+Group=root
+RuntimeDirectory=gunicorn
+WorkingDirectory=PATH-TO-PROJECT-FOLDER
+ExecStart=/usr/local/bin/gunicorn --bind=unix:/tmp/honeytree.sock --workers=1 honeytree:app
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy=multi-user.target
